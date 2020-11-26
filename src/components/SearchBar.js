@@ -2,28 +2,44 @@ import React from 'react';
 
 class SearchBar extends React.Component {
     state = {
-        searchQuery: ''
+        searchQuery: '',
+        stocked: false
     }
 
-    handleOnChange = (event) => {
-        this.props.onFilter(event.target.value);
+    handleSearchInput = (event) => { 
+        let { value } = event.target
+      
+        this.setState({
+                searchQuery: value,
+            },
+            () => {
+                this.props.onFilter(this.state);
+            })
+    }  
 
-        this.setState ({
-            searchQuery: event.target.value
-        })
-    }
+    handleChecked = () => { 
+        this.setState({
+                stocked: !this.state.stocked,
+            },
+            () => {
+                this.props.onFilter(this.state);
+            })
+    }  
 
     render() {
-        return (
-            
-            <form>
-                <input type="text" 
-                placeholder = "Search..."
-                name="searchQuery" 
-                value={this.state.searchQuery}
-                onChange={this.handleOnChange}    
-                />
-            </form>
+        return(
+          <div>
+            <form >Search <br/>
+            <input type="text" name="searchQuery" 
+                onChange={this.handleSearchInput} 
+                value={this.state.searchQuery} 
+                placeholder="Search..." required></input> <br/>
+            <input type="checkbox" 
+                onChange={this.handleChecked} 
+                name="stocked"/>
+            <label>Only show prdoducts in stock </label>
+            </form> 
+          </div>  
         )
     }
 }

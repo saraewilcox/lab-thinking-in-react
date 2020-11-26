@@ -1,17 +1,19 @@
 import React from 'react';
 
-function ProductRow(props) {
-  return (
-    <div>
-        <tr>
-            {props.stocked 
-            ? <td>{props.name}</td>
-            : <td style={{color: "red"}}>{props.name}</td>
-            }
-            <td>{props.price}</td>
-        </tr>
-    </div>
-  );
+class ProductRow extends React.Component {
+
+        render() {
+        return(
+          <div>
+            {this.props.filteredProducts.map((item) => {
+                return <tr>
+                <td style={{color: item.stocked ? "black" : "red"}}>{item.name}</td>
+                <td>{item.price}</td>
+                </tr>
+               })}
+          </div>  
+        )
+    }
 }
 
 export default ProductRow;
